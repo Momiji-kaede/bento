@@ -7,30 +7,45 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <header>
-    <h1>お弁当作成支援</h1>
+    <button id="historyBtn">履歴</button>
+    <div class="ng-area">
+      <label>入れたくないもの：</label>
+      <input type="text" id="ngInput" placeholder="例：トマト, 魚">
+    </div>
   </header>
 
   <main>
-    <section class="form">
-      <h2>条件を入力</h2>
-      <label>
-        カロリー目安:
-        <input type="number" id="calorie" placeholder="600">
-      </label>
-      <label>
-        好きな食材:
-        <input type="text" id="favorite" placeholder="卵, 鶏肉 など">
-      </label>
-      <button id="generate">お弁当案を作る</button>
-    </section>
+    <div class="selector-area">
+      <label>主食：</label>
+      <select id="stapleSelect"></select>
+
+      <label>主菜：</label>
+      <select id="mainSelect"></select>
+
+      <label>副菜：</label>
+      <select id="sideSelect"></select>
+
+      <button id="generateBtn">提案する</button>
+    </div>
 
     <section class="result">
-      <h2>おすすめお弁当案</h2>
-      <div id="bento-result">ここに結果が表示されます</div>
+      <h2>提案結果</h2>
+      <div id="resultArea">ここに結果が表示されます</div>
     </section>
   </main>
 
+  <!-- 履歴ポップアップ -->
+  <div id="historyPopup" class="popup hidden">
+    <div class="popup-content">
+      <h3>過去3日分の履歴</h3>
+      <div id="historyList"></div>
+      <button id="closeHistory">閉じる</button>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
