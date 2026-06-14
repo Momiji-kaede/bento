@@ -78,6 +78,15 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     if (!side) side = randomPick(sides, ngWords);
   }
 
+    // ▼ おすすめ理由の生成（★ここが今回の追加ポイント）
+  let reason = "";
+  if (combinations[staple] && combinations[staple][main]) {
+    const recommendedList = combinations[staple][main];
+    if (recommendedList.includes(side)) {
+      reason = sideReasons[side] || "";
+    }
+  }
+  
   // 最終NGチェック
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
@@ -85,10 +94,12 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     return;
   }
 
+  // ▼ 結果表示（理由つき）
   document.getElementById("resultArea").innerHTML = `
     主食：${staple}<br>
     主菜：${main}<br>
     副菜：${side}<br>
+    ${reason ? `<br><b>おすすめ理由：</b>${reason}` : ""}
   `;
 
   saveHistory(staple, main, side);
