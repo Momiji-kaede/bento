@@ -32,46 +32,53 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     .map(w => w.trim())
     .filter(w => w);
 
-  // まず、選ばれているものにNGが含まれていないかチェック
+  // NGチェック
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。選び直してください。";
     return;
   }
 
-  // 何も選んでいない場合 → 全部ランダム
+  // 0個 → 全部ランダム
   if (!staple && !main && !side) {
     staple = randomPick(staples, ngWords);
     main   = randomPick(mains, ngWords);
     side   = randomPick(sides, ngWords);
   }
 
-  // 主食が空ならランダム
-  if (!staple) {
-    staple = randomPick(staples, ngWords);
-  }
+  // 主食補完
+  if (!staple) staple = randomPick(staples, ngWords);
 
-  // 主菜が空なら、まず相性から探す → なければランダム
+  // 主菜補完（相性優先）
   if (!main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
     }
-    if (!main) {
-      main = randomPick(mains, ngWords);
+    if (!main) main = randomPick(mains, ngWords);
+  }
+
+  // ▼ ここが今回追加した部分
+  // 全部選んでいる場合は「おすすめ副菜」を優先
+  if (staple && main && side) {
+    if (combinations[staple] && combinations[staple][main]) {
+      const recommended = combinations[staple][main].filter(
+        item => !ngWords.includes(item)
+      );
+      if (recommended.length > 0) {
+        side = recommended[0];
+      }
     }
   }
 
-  // 副菜が空なら、まず相性から探す → なければランダム
+  // 副菜補完（相性優先）
   if (!side) {
     if (combinations[staple] && combinations[staple][main]) {
       side = randomPick(combinations[staple][main], ngWords);
     }
-    if (!side) {
-      side = randomPick(sides, ngWords);
-    }
+    if (!side) side = randomPick(sides, ngWords);
   }
 
-  // 最終NGチェック（補完後にNGが紛れ込んでいないか）
+  // 最終NGチェック
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。別の組み合わせを試してください。";
