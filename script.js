@@ -19,46 +19,47 @@ fillSelect("sideSelect", sides);
 
 // ▼ 提案ボタン
 document.getElementById("generateBtn").addEventListener("click", () => {
-  const staple = document.getElementById("stapleSelect").value;
-  const main = document.getElementById("mainSelect").value;
-  const side = document.getElementById("sideSelect").value;
+  let staple = document.getElementById("stapleSelect").value;
+  let main = document.getElementById("mainSelect").value;
+  let side = document.getElementById("sideSelect").value;
 
   const ngWords = document.getElementById("ngInput").value
     .split(",")
     .map(w => w.trim())
     .filter(w => w);
 
-  let result = "";
-
-  // 入れたくないものチェック
-  if ([staple, main, side].some(item => ngWords.includes(item))) {
-    document.getElementById("resultArea").innerHTML =
-      "入れたくないものが含まれています。選び直してください。";
-    return;
+  // ▼ 1つだけ選んだ場合の補完ロジック
+  if (!staple && main) {
+    staple = randomPick(Object.keys(combinations), ngWords);
   }
 
-  // 相性提案
-  let suggestedSide = side;
-
-  if (staple && main && combinations[staple] && combinations[staple][main]) {
-    const candidates = combinations[staple][main].filter(
-      s => !ngWords.includes(s)
-    );
-    if (candidates.length > 0) {
-      suggestedSide = candidates[Math.floor(Math.random() * candidates.length)];
+  if (!main && staple) {
+    if (combinations[staple]) {
+      main = randomPick(Object.keys(combinations[staple]), ngWords);
     }
   }
 
-  result = `
-    主食：${staple || "（未選択）"}<br>
-    主菜：${main || "（未選択）"}<br>
-    副菜：${suggestedSide || side || "（未選択）"}<br>
+  if (!side && staple && main) {
+    if (combinations[staple] && combinations[staple][main]) {
+      side = randomPick(combinations[staple][main], ngWords);
+    }
+  }
+
+  // ▼ それでも決まらない場合は完全ランダム
+  if (!staple) staple = randomPick(staples, ngWords);
+  if (!main) main = randomPick(mains, ngWords);
+  if (!side) side = randomPick(sides, ngWords);
+
+  // ▼ 結果表示
+  document.getElementById("resultArea").innerHTML = `
+    主食：${staple}<br>
+    主菜：${main}<br>
+    副菜：${side}<br>
   `;
 
-  document.getElementById("resultArea").innerHTML = result;
-
-  saveHistory(staple, main, suggestedSide);
+  saveHistory(staple, main, side);
 });
+
 
 // ▼ 履歴保存（3日分）
 function saveHistory(staple, main, side) {
