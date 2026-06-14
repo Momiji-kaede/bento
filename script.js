@@ -28,27 +28,48 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     .map(w => w.trim())
     .filter(w => w);
 
-  // ▼ 1つだけ選んだ場合の補完ロジック
-  if (!staple && main) {
-    staple = randomPick(Object.keys(combinations), ngWords);
+  // ▼ NGワードを含む選択は即除外
+  if ([staple, main, side].some(item => ngWords.includes(item))) {
+    document.getElementById("resultArea").innerHTML =
+      "入れたくないものが含まれています。選び直してください。";
+    return;
   }
 
-  if (!main && staple) {
+  // ▼ 主食 → 主菜補完
+  if (staple && !main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
     }
   }
 
-  if (!side && staple && main) {
+  // ▼ 主菜 → 主食補完
+  if (main && !staple) {
+    const possibleStaples = Object.keys(combinations).filter(
+      s => combinations[s][main]
+    );
+    if (possibleStaples.length > 0) {
+      staple = randomPick(possibleStaples, ngWords);
+    }
+  }
+
+  // ▼ 主食＋主菜 → 副菜補完
+  if (staple && main && !side) {
     if (combinations[staple] && combinations[staple][main]) {
       side = randomPick(combinations[staple][main], ngWords);
     }
   }
 
-  // ▼ それでも決まらない場合は完全ランダム
+  // ▼ まだ決まらない場合は完全ランダム（NG除外）
   if (!staple) staple = randomPick(staples, ngWords);
   if (!main) main = randomPick(mains, ngWords);
   if (!side) side = randomPick(sides, ngWords);
+
+  // ▼ 最終NGチェック（補完後にNGが混ざる可能性があるため）
+  if ([staple, main, side].some(item => ngWords.includes(item))) {
+    document.getElementById("resultArea").innerHTML =
+      "入れたくないものが含まれています。別の組み合わせを試してください。";
+    return;
+  }
 
   // ▼ 結果表示
   document.getElementById("resultArea").innerHTML = `
