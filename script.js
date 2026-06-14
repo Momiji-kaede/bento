@@ -1,3 +1,7 @@
+function randomPick(list, ngWords) {
+  const filtered = list.filter(item => item && !ngWords.includes(item));
+  return filtered[Math.floor(Math.random() * filtered.length)];
+}
 // ▼ プルダウンにデータを入れる
 function fillSelect(id, list) {
   const sel = document.getElementById(id);
