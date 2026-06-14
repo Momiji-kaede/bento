@@ -112,6 +112,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 });
 
 
+
 // ▼ 履歴保存（3日分）
 function saveHistory(staple, main, side) {
   const today = new Date().toLocaleDateString("ja-JP");
