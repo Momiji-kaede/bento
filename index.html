@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>お弁当作成支援アプリ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>お弁当作成支援</h1>
+  </header>
+
+  <main>
+    <section class="form">
+      <h2>条件を入力</h2>
+      <label>
+        カロリー目安:
+        <input type="number" id="calorie" placeholder="600">
+      </label>
+      <label>
+        好きな食材:
+        <input type="text" id="favorite" placeholder="卵, 鶏肉 など">
+      </label>
+      <button id="generate">お弁当案を作る</button>
+    </section>
+
+    <section class="result">
+      <h2>おすすめお弁当案</h2>
+      <div id="bento-result">ここに結果が表示されます</div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
