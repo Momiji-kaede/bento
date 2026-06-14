@@ -46,9 +46,8 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   if (staple && !main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
-    } else {
-      main = randomPick(mains, ngWords);
     }
+    if (!main) main = randomPick(mains, ngWords); // ← 必ず補完
   }
 
   // ▼ 主菜だけ選んだ → 主食補完
@@ -58,9 +57,8 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     );
     if (possibleStaples.length > 0) {
       staple = randomPick(possibleStaples, ngWords);
-    } else {
-      staple = randomPick(staples, ngWords);
     }
+    if (!staple) staple = randomPick(staples, ngWords); // ← 必ず補完
   }
 
   // ▼ 副菜だけ選んだ → 主菜補完 → 主食補完
@@ -73,9 +71,8 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   if (staple && side && !main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
-    } else {
-      main = randomPick(mains, ngWords);
     }
+    if (!main) main = randomPick(mains, ngWords); // ← 必ず補完
   }
 
   // ▼ 主菜＋副菜 → 主食補完
@@ -85,18 +82,16 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     );
     if (possibleStaples.length > 0) {
       staple = randomPick(possibleStaples, ngWords);
-    } else {
-      staple = randomPick(staples, ngWords);
     }
+    if (!staple) staple = randomPick(staples, ngWords); // ← 必ず補完
   }
 
   // ▼ 主食＋主菜 → 副菜補完
   if (staple && main && !side) {
     if (combinations[staple] && combinations[staple][main]) {
       side = randomPick(combinations[staple][main], ngWords);
-    } else {
-      side = randomPick(sides, ngWords);
     }
+    if (!side) side = randomPick(sides, ngWords); // ← 必ず補完
   }
 
   // ▼ 最終NGチェック
@@ -115,6 +110,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
   saveHistory(staple, main, side);
 });
+
 
 // ▼ 履歴保存（3日分）
 function saveHistory(staple, main, side) {
