@@ -28,27 +28,65 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     .map(w => w.trim())
     .filter(w => w);
 
-  // ▼ NGワードを含む選択は即除外
+  // ▼ NGワードチェック（選択時点）
   if ([staple, main, side].some(item => ngWords.includes(item))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。選び直してください。";
     return;
   }
 
-  // ▼ 主食 → 主菜補完
+  // ▼ 0個選択 → 全部ランダム
+  if (!staple && !main && !side) {
+    staple = randomPick(staples, ngWords);
+    main = randomPick(mains, ngWords);
+    side = randomPick(sides, ngWords);
+  }
+
+  // ▼ 主食だけ選んだ → 主菜補完
   if (staple && !main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
+    } else {
+      main = randomPick(mains, ngWords);
     }
   }
 
-  // ▼ 主菜 → 主食補完
+  // ▼ 主菜だけ選んだ → 主食補完
   if (main && !staple) {
     const possibleStaples = Object.keys(combinations).filter(
       s => combinations[s][main]
     );
     if (possibleStaples.length > 0) {
       staple = randomPick(possibleStaples, ngWords);
+    } else {
+      staple = randomPick(staples, ngWords);
+    }
+  }
+
+  // ▼ 副菜だけ選んだ → 主菜補完 → 主食補完
+  if (side && !staple && !main) {
+    main = randomPick(mains, ngWords);
+    staple = randomPick(staples, ngWords);
+  }
+
+  // ▼ 主食＋副菜 → 主菜補完
+  if (staple && side && !main) {
+    if (combinations[staple]) {
+      main = randomPick(Object.keys(combinations[staple]), ngWords);
+    } else {
+      main = randomPick(mains, ngWords);
+    }
+  }
+
+  // ▼ 主菜＋副菜 → 主食補完
+  if (main && side && !staple) {
+    const possibleStaples = Object.keys(combinations).filter(
+      s => combinations[s][main]
+    );
+    if (possibleStaples.length > 0) {
+      staple = randomPick(possibleStaples, ngWords);
+    } else {
+      staple = randomPick(staples, ngWords);
     }
   }
 
@@ -56,15 +94,12 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   if (staple && main && !side) {
     if (combinations[staple] && combinations[staple][main]) {
       side = randomPick(combinations[staple][main], ngWords);
+    } else {
+      side = randomPick(sides, ngWords);
     }
   }
 
-  // ▼ まだ決まらない場合は完全ランダム（NG除外）
-  if (!staple) staple = randomPick(staples, ngWords);
-  if (!main) main = randomPick(mains, ngWords);
-  if (!side) side = randomPick(sides, ngWords);
-
-  // ▼ 最終NGチェック（補完後にNGが混ざる可能性があるため）
+  // ▼ 最終NGチェック
   if ([staple, main, side].some(item => ngWords.includes(item))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。別の組み合わせを試してください。";
@@ -80,6 +115,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
   saveHistory(staple, main, side);
 });
+
 
 
 // ▼ 履歴保存（3日分）
