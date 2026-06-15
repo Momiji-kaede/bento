@@ -83,18 +83,48 @@ header {
   display: none;
 }
 
-/* ------------------------------ */
-/* 📱 スマホ（600px以下） */
-/* ------------------------------ */
+.ng-area {
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+}
+
+.ng-category {
+  margin-bottom: 16px;
+}
+
+.ng-category h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #555;
+}
+
+.ng-item {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 4px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.ng-item:hover {
+  background: #f0f0f0;
+}
+
 @media screen and (max-width: 600px) {
 
-  /* スマホは縦並び */
   .select-area {
     display: block;
   }
 
-  .ng-area {
-    margin-bottom: 20px;
+  .container {
+    width: 90%;
+    margin: 0 auto;
   }
 
   #generateBtn {
@@ -104,12 +134,8 @@ header {
   }
 }
 
-/* ------------------------------ */
-/* 💻 PC（601px以上） */
-/* ------------------------------ */
 @media screen and (min-width: 601px) {
 
-  /* PCは横並び（PPTの構成に合わせた3カラム） */
   .select-area {
     display: flex;
     gap: 20px;
@@ -119,8 +145,9 @@ header {
     flex: 1;
   }
 
-  .ng-area {
-    margin-bottom: 20px;
+  .container {
+    width: 800px;
+    margin: 0 auto;
   }
 
   #generateBtn {
