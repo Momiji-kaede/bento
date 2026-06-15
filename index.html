@@ -10,22 +10,30 @@
 
   <header>
     <button id="historyBtn">履歴</button>
-    <div class="ng-area">
-      <h3>入れたくないもの</h3>
+    <button id="openNgModal" class="ng-btn">入れたくないもの</button>
 
-      <div class="ng-category">
-        <h4>主食</h4>
-        <div id="ngStaple"></div>
-      </div>
+    <!-- ポップアップ（モーダル） -->
+    <div id="ngModal" class="modal">
+      <div class="modal-content">
+        <span id="closeNgModal" class="close">&times;</span>
+        <h3>入れたくないもの</h3>
 
-      <div class="ng-category">
-        <h4>主菜</h4>
-        <div id="ngMain"></div>
-      </div>
+        <div class="ng-category">
+          <h4>主食</h4>
+          <div id="ngStaple"></div>
+        </div>
 
-      <div class="ng-category">
-        <h4>副菜</h4>
-        <div id="ngSide"></div>
+        <div class="ng-category">
+          <h4>主菜</h4>
+          <div id="ngMain"></div>
+        </div>
+
+        <div class="ng-category">
+          <h4>副菜</h4>
+          <div id="ngSide"></div>
+        </div>
+
+        <button id="closeNgModalBottom" class="close-btn">閉じる</button>
       </div>
     </div>
   </header>
