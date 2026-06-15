@@ -1,3 +1,4 @@
+// ▼ NGリスト生成
 function renderNgList() {
   const ngStaple = document.getElementById("ngStaple");
   const ngMain   = document.getElementById("ngMain");
@@ -20,6 +21,17 @@ function renderNgList() {
 }
 
 renderNgList();
+
+
+// ▼ モーダル開閉
+const modal = document.getElementById("ngModal");
+document.getElementById("openNgModal").onclick = () => modal.style.display = "block";
+document.getElementById("closeNgModal").onclick = () => modal.style.display = "none";
+document.getElementById("closeNgModalBottom").onclick = () => modal.style.display = "none";
+
+window.onclick = (e) => {
+  if (e.target === modal) modal.style.display = "none";
+};
 
 
 function randomPick(list, ngWords) {
