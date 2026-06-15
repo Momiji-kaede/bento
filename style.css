@@ -193,36 +193,38 @@ header {
    ============================ */
 @media screen and (min-width: 601px) {
 
-  /* 横並びはそのまま */
   .selector-area {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     justify-content: space-between;
-    align-items: flex-end; /* ← ラベルと高さを揃える */
+    align-items: flex-end;
   }
 
-  /* 各ブロックの枠を大きく */
   .select-block {
     flex: 1;
   }
 
-  /* プルダウンを大きく見やすく */
+  /* ★ ここが重要：プルダウンを大きくする */
   .select-block select {
     width: 100%;
-    padding: 14px 12px;     /* ← 高さアップ */
-    font-size: 18px;        /* ← 文字大きく */
-    border-radius: 10px;
-    height: 48px;           /* ← 四角をしっかり大きく */
+    padding: 16px 14px;     /* ← 高さアップ */
+    font-size: 20px;        /* ← 文字大きく */
+    border-radius: 12px;
+    height: 56px;           /* ← 四角をしっかり大きく */
     box-sizing: border-box;
+    border: 2px solid #ffb36b; /* ← オレンジ系で見やすく */
+    background-color: #fff;
   }
 
-  /* ラベルも少し大きくして見やすく */
+  /* ラベルも大きくしてバランスを取る */
   .select-block label {
-    font-size: 16px;
-    margin-bottom: 6px;
+    font-size: 18px;
+    margin-bottom: 8px;
     display: block;
+    font-weight: bold;
   }
 }
+
 
 
 
