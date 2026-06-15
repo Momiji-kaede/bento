@@ -107,6 +107,12 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     }
   }
 
+  // ▼ 副菜だけ選んだ場合 → 主菜 → 主食 の順で補完
+  if (side && !staple && !main) {
+    main = randomPick(mains, ngWords);
+    staple = randomPick(staples, ngWords);
+  }
+
   // 副菜補完（相性優先）
   if (!side) {
     if (combinations[staple] && combinations[staple][main]) {
