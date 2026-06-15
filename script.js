@@ -1,3 +1,19 @@
+function renderNgList() {
+  const allItems = [...staples, ...mains, ...sides].filter(v => v);
+  const ngList = document.getElementById("ngList");
+
+  ngList.innerHTML = allItems
+    .map(item => `
+      <label class="ng-item">
+        <input type="checkbox" value="${item}">
+        ${item}
+      </label>
+    `)
+    .join("");
+}
+
+renderNgList();
+
 function randomPick(list, ngWords) {
   const candidates = list.filter(
     item => item && !ngWords.includes(item)
@@ -33,10 +49,13 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   let main   = document.getElementById("mainSelect").value;
   let side   = document.getElementById("sideSelect").value;
 
-  const ngWords = document.getElementById("ngInput").value
-    .split(",")
-    .map(w => w.trim())
-    .filter(w => w);
+  // const ngWords = document.getElementById("ngInput").value
+  //   .split(",")
+  //   .map(w => w.trim())
+  //   .filter(w => w);
+
+  const ngWords = [...document.querySelectorAll("#ngList input:checked")]
+  .map(cb => cb.value);
 
   // ▼ NGチェック
   if ([staple, main, side].some(v => ngWords.includes(v))) {
