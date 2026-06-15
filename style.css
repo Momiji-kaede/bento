@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: system-ui, sans-serif;
   margin: 0;
   background: #fffaf5;
@@ -81,7 +81,7 @@ header {
 
 .hidden {
   display: none;
-}
+} */
 
 /* スマホ（600px以下） */
 @media screen and (max-width: 600px) {
