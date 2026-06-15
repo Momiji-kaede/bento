@@ -83,41 +83,33 @@ header {
   display: none;
 }
 
-/* スマホ（600px以下） */
+/* ------------------------------ */
+/* 📱 スマホ（600px以下） */
+/* ------------------------------ */
 @media screen and (max-width: 600px) {
 
-  /* セレクトエリアを縦並びに */
+  /* スマホは縦並び */
   .select-area {
     display: block;
   }
 
-  /* セレクトボックスを押しやすく */
-  select {
-    width: 100%;
-    font-size: 18px;
-    padding: 14px;
-    margin-bottom: 12px;
+  .ng-area {
+    margin-bottom: 20px;
   }
 
-  /* ボタンを大きく */
   #generateBtn {
     width: 100%;
     font-size: 20px;
     padding: 16px;
-    border-radius: 24px;
-  }
-
-  /* コンテナ幅 */
-  .container {
-    width: 90%;
-    margin: 0 auto;
   }
 }
 
-/* PC（601px以上） */
+/* ------------------------------ */
+/* 💻 PC（601px以上） */
+/* ------------------------------ */
 @media screen and (min-width: 601px) {
 
-  /* セレクトエリアを横並びに */
+  /* PCは横並び（PPTの構成に合わせた3カラム） */
   .select-area {
     display: flex;
     gap: 20px;
@@ -127,16 +119,13 @@ header {
     flex: 1;
   }
 
-  /* ボタンは小さめ */
+  .ng-area {
+    margin-bottom: 20px;
+  }
+
   #generateBtn {
     width: 200px;
     font-size: 16px;
     padding: 12px;
-  }
-
-  /* コンテナ幅 */
-  .container {
-    width: 600px;
-    margin: 0 auto;
   }
 }
