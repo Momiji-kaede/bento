@@ -193,37 +193,46 @@ header {
    ============================ */
 @media screen and (min-width: 601px) {
 
-  .selector-area {
+  .select-area {
     display: flex;
     gap: 24px;
     justify-content: space-between;
-    align-items: flex-end;
+    margin-bottom: 20px;
   }
 
   .select-block {
     flex: 1;
   }
 
-  /* ★ ここが重要：プルダウンを大きくする */
   .select-block select {
     width: 100%;
-    padding: 16px 14px;     /* ← 高さアップ */
-    font-size: 20px;        /* ← 文字大きく */
+    padding: 18px 16px;
+    font-size: 20px;
     border-radius: 12px;
-    height: 56px;           /* ← 四角をしっかり大きく */
+    height: 60px;
+    border: 2px solid #ffb36b;
+    background: #fff;
     box-sizing: border-box;
-    border: 2px solid #ffb36b; /* ← オレンジ系で見やすく */
-    background-color: #fff;
   }
 
-  /* ラベルも大きくしてバランスを取る */
   .select-block label {
     font-size: 18px;
     margin-bottom: 8px;
     display: block;
     font-weight: bold;
   }
+
+  /* 提案するボタンもPC版は大きめに */
+  #generateBtn {
+    width: 200px;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+  }
 }
+
 
 
 
