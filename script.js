@@ -59,6 +59,101 @@ fillSelect("mainSelect", mains);
 fillSelect("sideSelect", sides);
 
 // ▼ 提案ボタン
+// document.getElementById("generateBtn").addEventListener("click", () => {
+//   let staple = document.getElementById("stapleSelect").value;
+//   let main   = document.getElementById("mainSelect").value;
+//   let side   = document.getElementById("sideSelect").value;
+
+//   const ngWords = document.getElementById("ngInput").value
+//     .split(",")
+//     .map(w => w.trim())
+//     .filter(w => w);
+
+//   // NGチェック
+//   if ([staple, main, side].some(v => ngWords.includes(v))) {
+//     document.getElementById("resultArea").innerHTML =
+//       "入れたくないものが含まれています。選び直してください。";
+//     return;
+//   }
+
+//   // 0個 → 全部ランダム
+//   if (!staple && !main && !side) {
+//     staple = randomPick(staples, ngWords);
+//     main   = randomPick(mains, ngWords);
+//     side   = randomPick(sides, ngWords);
+//   }
+
+//   // 主食補完
+//   if (!staple) staple = randomPick(staples, ngWords);
+
+//   // 主菜補完（相性優先）
+//   if (!main) {
+//     if (combinations[staple]) {
+//       main = randomPick(Object.keys(combinations[staple]), ngWords);
+//     }
+//     if (!main) main = randomPick(mains, ngWords);
+//   }
+
+//   // ▼ 副菜だけ選んだ場合 → 主菜 → 主食 の順で補完
+//   if (side && !staple && !main) {
+//     main = randomPick(mains, ngWords);
+//     staple = randomPick(staples, ngWords);
+//   }
+
+//   // 副菜補完（相性優先）
+//   if (!side) {
+//     if (combinations[staple] && combinations[staple][main]) {
+//       side = randomPick(combinations[staple][main], ngWords);
+//     }
+//     if (!side) side = randomPick(sides, ngWords);
+//   }
+
+//   // ▼ ここが今回追加した部分
+//   // 全部選んでいる場合は「おすすめ副菜」を優先
+//   if (staple && main && side) {
+//     if (combinations[staple] && combinations[staple][main]) {
+//       const recommended = combinations[staple][main].filter(
+//         item => !ngWords.includes(item)
+//       );
+//       if (recommended.length > 0) {
+//         side = recommended[0];
+//       }
+//     }
+//   }
+
+
+//   let reason = "";
+//   if (combinations[staple] && combinations[staple][main]) {
+//     const recommendedList = combinations[staple][main];
+//     if (recommendedList.includes(side)) {
+//       reason = sideReasons[side] || "";
+//     }
+//   }
+  
+//   // 最終NGチェック
+//   if ([staple, main, side].some(v => ngWords.includes(v))) {
+//     document.getElementById("resultArea").innerHTML =
+//       "入れたくないものが含まれています。別の組み合わせを試してください。";
+//     return;
+//   }
+
+//   // // ▼ 結果表示
+//   // document.getElementById("resultArea").innerHTML = `
+//   //   主食：${staple}<br>
+//   //   主菜：${main}<br>
+//   //   副菜：${side}<br>
+//   // `;
+
+//    // ▼ 結果表示（理由つき）
+//   document.getElementById("resultArea").innerHTML = `
+//     主食：${staple}<br>
+//     主菜：${main}<br>
+//     副菜：${side}<br>
+//     ${reason ? `<br><b>おすすめ理由：</b>${reason}` : ""}
+//   `;
+//   saveHistory(staple, main, side);
+// });
+
 document.getElementById("generateBtn").addEventListener("click", () => {
   let staple = document.getElementById("stapleSelect").value;
   let main   = document.getElementById("mainSelect").value;
@@ -69,59 +164,69 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     .map(w => w.trim())
     .filter(w => w);
 
-  // NGチェック
+  // ▼ NGチェック（選択時点）
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。選び直してください。";
     return;
   }
 
-  // 0個 → 全部ランダム
+  // ▼ 0個選択 → 全部ランダム（相性優先で決める）
   if (!staple && !main && !side) {
+    // 主食ランダム
     staple = randomPick(staples, ngWords);
-    main   = randomPick(mains, ngWords);
-    side   = randomPick(sides, ngWords);
+
+    // 主菜：主食との相性があればそこから、なければ全体から
+    if (combinations[staple]) {
+      main = randomPick(Object.keys(combinations[staple]), ngWords);
+    }
+    if (!main) {
+      main = randomPick(mains, ngWords);
+    }
+
+    // 副菜：主食×主菜の相性があればそこから、なければ全体から
+    if (combinations[staple] && combinations[staple][main]) {
+      side = randomPick(combinations[staple][main], ngWords);
+    }
+    if (!side) {
+      side = randomPick(sides, ngWords);
+    }
   }
 
-  // 主食補完
-  if (!staple) staple = randomPick(staples, ngWords);
+  // ▼ 副菜だけ選んだ → 主菜 → 主食 の順で補完
+  if (side && !staple && !main) {
+    main   = randomPick(mains, ngWords);
+    staple = randomPick(staples, ngWords);
+  }
 
-  // 主菜補完（相性優先）
+  // ▼ ここからは「残りを埋める」共通処理
+
+  // 主食が空ならランダム
+  if (!staple) {
+    staple = randomPick(staples, ngWords);
+  }
+
+  // 主菜が空なら、主食との相性優先 → なければランダム
   if (!main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
     }
-    if (!main) main = randomPick(mains, ngWords);
+    if (!main) {
+      main = randomPick(mains, ngWords);
+    }
   }
 
-  // ▼ 副菜だけ選んだ場合 → 主菜 → 主食 の順で補完
-  if (side && !staple && !main) {
-    main = randomPick(mains, ngWords);
-    staple = randomPick(staples, ngWords);
-  }
-
-  // 副菜補完（相性優先）
+  // 副菜が空なら、主食×主菜の相性優先 → なければランダム
   if (!side) {
     if (combinations[staple] && combinations[staple][main]) {
       side = randomPick(combinations[staple][main], ngWords);
     }
-    if (!side) side = randomPick(sides, ngWords);
-  }
-
-  // ▼ ここが今回追加した部分
-  // 全部選んでいる場合は「おすすめ副菜」を優先
-  if (staple && main && side) {
-    if (combinations[staple] && combinations[staple][main]) {
-      const recommended = combinations[staple][main].filter(
-        item => !ngWords.includes(item)
-      );
-      if (recommended.length > 0) {
-        side = recommended[0];
-      }
+    if (!side) {
+      side = randomPick(sides, ngWords);
     }
   }
 
-
+  // ▼ おすすめ理由の生成
   let reason = "";
   if (combinations[staple] && combinations[staple][main]) {
     const recommendedList = combinations[staple][main];
@@ -129,31 +234,24 @@ document.getElementById("generateBtn").addEventListener("click", () => {
       reason = sideReasons[side] || "";
     }
   }
-  
-  // 最終NGチェック
+
+  // ▼ 最終NGチェック（補完後）
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。別の組み合わせを試してください。";
     return;
   }
 
-  // // ▼ 結果表示
-  // document.getElementById("resultArea").innerHTML = `
-  //   主食：${staple}<br>
-  //   主菜：${main}<br>
-  //   副菜：${side}<br>
-  // `;
-
-   // ▼ 結果表示（理由つき）
+  // ▼ 結果表示
   document.getElementById("resultArea").innerHTML = `
     主食：${staple}<br>
     主菜：${main}<br>
     副菜：${side}<br>
     ${reason ? `<br><b>おすすめ理由：</b>${reason}` : ""}
   `;
+
   saveHistory(staple, main, side);
 });
-
 
 
 
