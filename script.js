@@ -94,19 +94,6 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     if (!main) main = randomPick(mains, ngWords);
   }
 
-  // ▼ ここが今回追加した部分
-  // 全部選んでいる場合は「おすすめ副菜」を優先
-  if (staple && main && side) {
-    if (combinations[staple] && combinations[staple][main]) {
-      const recommended = combinations[staple][main].filter(
-        item => !ngWords.includes(item)
-      );
-      if (recommended.length > 0) {
-        side = recommended[0];
-      }
-    }
-  }
-
   // ▼ 副菜だけ選んだ場合 → 主菜 → 主食 の順で補完
   if (side && !staple && !main) {
     main = randomPick(mains, ngWords);
@@ -120,6 +107,20 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     }
     if (!side) side = randomPick(sides, ngWords);
   }
+
+  // ▼ ここが今回追加した部分
+  // 全部選んでいる場合は「おすすめ副菜」を優先
+  if (staple && main && side) {
+    if (combinations[staple] && combinations[staple][main]) {
+      const recommended = combinations[staple][main].filter(
+        item => !ngWords.includes(item)
+      );
+      if (recommended.length > 0) {
+        side = recommended[0];
+      }
+    }
+  }
+
 
   let reason = "";
   if (combinations[staple] && combinations[staple][main]) {
