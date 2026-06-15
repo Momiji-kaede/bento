@@ -193,7 +193,7 @@ header {
    ============================ */
 @media screen and (min-width: 601px) {
 
-  .select-area {
+  .selector-area {
     display: flex;
     gap: 24px;
     justify-content: space-between;
