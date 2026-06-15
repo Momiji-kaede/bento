@@ -160,11 +160,14 @@ header {
   cursor: pointer;
   transition: 0.2s;
   font-size: 15px;
+  color: #333; /* ← 文字色を濃くして見やすく */
 }
 
 .ng-item:hover {
-  background: #f0f0f0;
+  background: #eee;
+  color: #000; /* ← ホバー時はさらに濃く */
 }
+
 
 
 @media screen and (max-width: 600px) {
