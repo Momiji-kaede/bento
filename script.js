@@ -1,18 +1,26 @@
 function renderNgList() {
-  const allItems = [...staples, ...mains, ...sides].filter(v => v);
-  const ngList = document.getElementById("ngList");
+  const ngStaple = document.getElementById("ngStaple");
+  const ngMain   = document.getElementById("ngMain");
+  const ngSide   = document.getElementById("ngSide");
 
-  ngList.innerHTML = allItems
-    .map(item => `
-      <label class="ng-item">
-        <input type="checkbox" value="${item}">
-        ${item}
-      </label>
-    `)
+  ngStaple.innerHTML = staples
+    .filter(v => v)
+    .map(item => `<label class="ng-item"><input type="checkbox" value="${item}">${item}</label>`)
+    .join("");
+
+  ngMain.innerHTML = mains
+    .filter(v => v)
+    .map(item => `<label class="ng-item"><input type="checkbox" value="${item}">${item}</label>`)
+    .join("");
+
+  ngSide.innerHTML = sides
+    .filter(v => v)
+    .map(item => `<label class="ng-item"><input type="checkbox" value="${item}">${item}</label>`)
     .join("");
 }
 
 renderNgList();
+
 
 function randomPick(list, ngWords) {
   const candidates = list.filter(
@@ -54,7 +62,10 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   //   .map(w => w.trim())
   //   .filter(w => w);
 
-  const ngWords = [...document.querySelectorAll("#ngList input:checked")]
+  // const ngWords = [...document.querySelectorAll("#ngList input:checked")]
+  // .map(cb => cb.value);
+
+  const ngWords = [...document.querySelectorAll(".ng-item input:checked")]
   .map(cb => cb.value);
 
   // ▼ NGチェック
