@@ -1,4 +1,4 @@
-/* body {
+body {
   font-family: system-ui, sans-serif;
   margin: 0;
   background: #fffaf5;
@@ -81,86 +81,25 @@ header {
 
 .hidden {
   display: none;
-} */
-
-/* 全体のポップな雰囲気 */
-body {
-  font-family: "Rounded Mplus 1c", "Hiragino Maru Gothic ProN", sans-serif;
-  background: #fff7fb;
-  color: #444;
-  margin: 0;
-  padding: 0;
 }
 
-/* コンテナ（中央寄せ） */
-.container {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(255, 150, 200, 0.25);
-  margin: 20px auto;
-}
-
-/* 見出し */
-h1 {
-  text-align: center;
-  color: #ff6fa8;
-  font-weight: bold;
-}
-
-/* セレクトボックス */
-select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 2px solid #ffb6d9;
-  background: #fff;
-  font-size: 16px;
-  margin-bottom: 12px;
-}
-
-/* ボタン（共通） */
-#generateBtn {
-  background: #ff8fc7;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: 0.2s;
-  display: block;
-  margin: 20px auto 0;
-}
-
-#generateBtn:hover {
-  background: #ff6fa8;
-}
-
-/* 結果表示 */
-#resultArea {
-  margin-top: 20px;
-  padding: 15px;
-  background: #ffe4f1;
-  border-radius: 12px;
-  font-size: 18px;
-  line-height: 1.6;
-}
-
-/* ------------------------------ */
-/* 📱 スマホ（600px以下） */
-/* ------------------------------ */
+/* スマホ（600px以下） */
 @media screen and (max-width: 600px) {
 
-  .container {
-    width: 90%;
-  }
-
-  /* スマホでは縦並び */
+  /* セレクトエリアを縦並びに */
   .select-area {
     display: block;
   }
 
-  /* ボタン大きめ */
+  /* セレクトボックスを押しやすく */
+  select {
+    width: 100%;
+    font-size: 18px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  /* ボタンを大きく */
   #generateBtn {
     width: 100%;
     font-size: 20px;
@@ -168,22 +107,17 @@ select {
     border-radius: 24px;
   }
 
-  select {
-    font-size: 18px;
-    padding: 14px;
+  /* コンテナ幅 */
+  .container {
+    width: 90%;
+    margin: 0 auto;
   }
 }
 
-/* ------------------------------ */
-/* 💻 PC（601px以上） */
-/* ------------------------------ */
+/* PC（601px以上） */
 @media screen and (min-width: 601px) {
 
-  .container {
-    width: 600px;
-  }
-
-  /* PCでは横並び */
+  /* セレクトエリアを横並びに */
   .select-area {
     display: flex;
     gap: 20px;
@@ -197,5 +131,12 @@ select {
   #generateBtn {
     width: 200px;
     font-size: 16px;
+    padding: 12px;
+  }
+
+  /* コンテナ幅 */
+  .container {
+    width: 600px;
+    margin: 0 auto;
   }
 }
