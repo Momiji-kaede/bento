@@ -193,31 +193,19 @@ header {
    ============================ */
 @media screen and (min-width: 601px) {
 
-  /* プルダウン3つを横並びに */
   .select-area {
-    display: flex !important;     /* ← 強制的に横並びにする */
-    justify-content: space-between;
+    display: flex;
     gap: 20px;
+    justify-content: space-between;
   }
 
-  /* 各プルダウンの幅を均等に */
-  .select-area > div {
+  .select-block {
     flex: 1;
     min-width: 0;
   }
 
-  /* プルダウンの見た目 */
   select {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 10px;
-  }
-
-  /* コンテナ幅（PC で中央に収める） */
-  .container {
-    width: 800px;
-    margin: 0 auto;
   }
 }
 
