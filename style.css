@@ -190,23 +190,31 @@ header {
 
 @media screen and (min-width: 601px) {
 
+  /* PCでは横に3つ並べる */
   .select-area {
     display: flex;
+    justify-content: space-between;
     gap: 20px;
   }
 
+  /* 各プルダウンの幅を均等に */
   .select-area > div {
-    flex: 1;
+    flex: 1;              /* ← これで3つが均等に広がる */
+    min-width: 0;         /* ← はみ出し防止 */
   }
 
+  /* プルダウン自体の見た目を整える */
+  select {
+    width: 100%;          /* ← 親要素に合わせて伸びる */
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  /* コンテナ幅（PCで中央にきれいに収まる） */
   .container {
     width: 800px;
     margin: 0 auto;
   }
-
-  #generateBtn {
-    width: 200px;
-    font-size: 16px;
-    padding: 12px;
-  }
 }
+
