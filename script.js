@@ -150,10 +150,11 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     副菜：${meals.dinner.side}<br>
   `;
 
-  document.getElementById("resultPopupArea").innerHTML = html;
+  // document.getElementById("resultPopupArea").innerHTML = html;
 
   // ▼ ポップアップを開く
-  document.getElementById("resultModal").style.display = "block";
+  // document.getElementById("resultModal").style.display = "block";
+  resultModal.style.display = "block";
 
   // ▼ 履歴保存（朝昼夜まとめて保存）
   saveHistory(meals.breakfast.staple, meals.breakfast.main, meals.breakfast.side);
