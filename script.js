@@ -33,6 +33,24 @@ window.onclick = (e) => {
   if (e.target === modal) modal.style.display = "none";
 };
 
+// ★★★ ここに結果モーダルの処理を追加する ★★★
+
+const resultModal = document.getElementById("resultModal");
+
+document.getElementById("closeResultModal").onclick = () => {
+  resultModal.style.display = "none";
+};
+
+document.getElementById("closeResultModalBottom").onclick = () => {
+  resultModal.style.display = "none";
+};
+
+window.onclick = (e) => {
+  if (e.target === resultModal) resultModal.style.display = "none";
+};
+
+// ★★★ ここまで追加 ★★★
+
 
 function randomPick(list, ngWords) {
   const candidates = list.filter(
