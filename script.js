@@ -105,6 +105,36 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   const ngWords = [...document.querySelectorAll(".ng-item input:checked")]
   .map(cb => cb.value);
 
+// ▼ 三食分の提案を生成
+  const meals = generateThreeMeals(staple, main, side, ngWords);
+
+  // ▼ ポップアップに表示するHTML
+  const html = `
+    <h4>朝食</h4>
+    主食：${meals.breakfast.staple}<br>
+    主菜：${meals.breakfast.main}<br>
+    副菜：${meals.breakfast.side}<br><br>
+
+    <h4>昼食</h4>
+    主食：${meals.lunch.staple}<br>
+    主菜：${meals.lunch.main}<br>
+    副菜：${meals.lunch.side}<br><br>
+
+    <h4>夕食</h4>
+    主食：${meals.dinner.staple}<br>
+    主菜：${meals.dinner.main}<br>
+    副菜：${meals.dinner.side}<br>
+  `;
+
+  document.getElementById("resultPopupArea").innerHTML = html;
+
+  // ▼ ポップアップを開く
+  document.getElementById("resultModal").style.display = "block";
+
+  // ▼ 履歴保存（朝昼夜まとめて保存）
+  saveHistory(meals.breakfast.staple, meals.breakfast.main, meals.breakfast.side);
+});
+  
   // ▼ NGチェック
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
