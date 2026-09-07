@@ -48,6 +48,31 @@ function randomPick(list, ngWords) {
 // }
 
 
+// ▼ 三食分の提案ロジック
+function generateThreeMeals(staple, main, side, ngWords) {
+
+  function makeOneMeal() {
+    let s = staple || randomPick(staples, ngWords);
+    let m = main || randomPick(mains, ngWords);
+
+    // 相性があれば優先
+    let sd = "";
+    if (combinations[s] && combinations[s][m]) {
+      sd = randomPick(combinations[s][m], ngWords);
+    }
+    if (!sd) sd = randomPick(sides, ngWords);
+
+    return { staple: s, main: m, side: sd };
+  }
+
+  return {
+    breakfast: makeOneMeal(),
+    lunch: makeOneMeal(),
+    dinner: makeOneMeal()
+  };
+}
+
+
 // ▼ プルダウンにデータを入れる
 function fillSelect(id, list) {
   const sel = document.getElementById(id);
