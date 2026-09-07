@@ -29,9 +29,9 @@ document.getElementById("openNgModal").onclick = () => modal.style.display = "bl
 document.getElementById("closeNgModal").onclick = () => modal.style.display = "none";
 document.getElementById("closeNgModalBottom").onclick = () => modal.style.display = "none";
 
-window.onclick = (e) => {
-  if (e.target === modal) modal.style.display = "none";
-};
+// window.onclick = (e) => {
+//   if (e.target === modal) modal.style.display = "none";
+// };
 
 // ★★★ ここに結果モーダルの処理を追加する ★★★
 
@@ -45,9 +45,15 @@ document.getElementById("closeResultModalBottom").onclick = () => {
   resultModal.style.display = "none";
 };
 
+// window.onclick = (e) => {
+//   if (e.target === resultModal) resultModal.style.display = "none";
+// };
+
 window.onclick = (e) => {
+  if (e.target === modal) modal.style.display = "none";
   if (e.target === resultModal) resultModal.style.display = "none";
 };
+
 
 // ★★★ ここまで追加 ★★★
 
