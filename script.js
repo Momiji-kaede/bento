@@ -185,44 +185,58 @@ function saveHistory(breakfast, lunch, dinner) {
     dinner
   });
 
-  history = history.slice(0, 3); // 3日分だけ保存
+  history = history.slice(0, 7); // 7日分だけ保存
 
   localStorage.setItem("bentoHistory", JSON.stringify(history));
 }
 
 
-// ▼ 履歴表示
+// ▼ 履歴表示（折りたたみ式）
 document.getElementById("historyBtn").addEventListener("click", () => {
   const history = JSON.parse(localStorage.getItem("bentoHistory")) || [];
   const list = document.getElementById("historyList");
 
   list.innerHTML = history
     .map(
-      h => `
-      <div>
-        <strong>${h.date}</strong><br>
+      (h, index) => `
+      <div class="history-day">
+        <div class="history-header" data-index="${index}">
+          <strong>${h.date}</strong> ▼
+        </div>
 
-        <h4>朝食</h4>
-        主食：${h.breakfast.staple}<br>
-        主菜：${h.breakfast.main}<br>
-        副菜：${h.breakfast.side}<br><br>
+        <div class="history-content hidden" id="historyContent${index}">
+          <h4>朝食</h4>
+          主食：${h.breakfast.staple}<br>
+          主菜：${h.breakfast.main}<br>
+          副菜：${h.breakfast.side}<br><br>
 
-        <h4>昼食</h4>
-        主食：${h.lunch.staple}<br>
-        主菜：${h.lunch.main}<br>
-        副菜：${h.lunch.side}<br><br>
+          <h4>昼食</h4>
+          主食：${h.lunch.staple}<br>
+          主菜：${h.lunch.main}<br>
+          副菜：${h.lunch.side}<br><br>
 
-        <h4>夕食</h4>
-        主食：${h.dinner.staple}<br>
-        主菜：${h.dinner.main}<br>
-        副菜：${h.dinner.side}<br><br>
+          <h4>夕食</h4>
+          主食：${h.dinner.staple}<br>
+          主菜：${h.dinner.main}<br>
+          副菜：${h.dinner.side}<br><br>
+        </div>
       </div>
     `
     )
     .join("");
 
   document.getElementById("historyPopup").classList.remove("hidden");
+
+  // ▼ 折りたたみ動作を追加
+  document.querySelectorAll(".history-header").forEach(header => {
+    header.addEventListener("click", () => {
+      const index = header.dataset.index;
+      const content = document.getElementById(`historyContent${index}`);
+      content.classList.toggle("hidden");
+    });
+  });
 });
+
 
 
 // ▼ 履歴閉じる
