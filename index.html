@@ -8,83 +8,72 @@
 </head>
 <body>
 
-  <header>
-    <button id="historyBtn">履歴</button>
-    <button id="openNgModal" class="ng-btn">入れたくないもの</button>
+<header>
+  <button id="historyBtn">履歴</button>
+  <button id="openNgModal" class="ng-btn">入れたくないもの</button>
+</header>
 
-    <!-- ポップアップ（モーダル） -->
-    <div id="ngModal" class="modal">
-      <div class="modal-content">
-        <span id="closeNgModal" class="close">&times;</span>
-        <h3>入れたくないもの</h3>
-
-        <div class="ng-category">
-          <h4>主食</h4>
-          <div id="ngStaple"></div>
-        </div>
-
-        <div class="ng-category">
-          <h4>主菜</h4>
-          <div id="ngMain"></div>
-        </div>
-
-        <div class="ng-category">
-          <h4>副菜</h4>
-          <div id="ngSide"></div>
-        </div>
-
-        <button id="closeNgModalBottom" class="close-btn">閉じる</button>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <div class="selector-area">
-      <div class="select-block">
-        <label>主食</label>
-        <select id="stapleSelect"></select>
-      </div>
-
-      <div class="select-block">
-        <label>主菜</label>
-        <select id="mainSelect"></select>
-      </div>
-
-      <div class="select-block">
-        <label>副菜</label>
-        <select id="sideSelect"></select>
-      </div>
+<main>
+  <div class="selector-area">
+    <div class="select-block">
+      <label>主食</label>
+      <select id="stapleSelect"></select>
     </div>
 
-    <button id="generateBtn">提案する</button>
+    <div class="select-block">
+      <label>主菜</label>
+      <select id="mainSelect"></select>
+    </div>
 
-    <section class="result">
-      <h2>提案結果</h2>
-      <div id="resultArea">ここに結果が表示されます</div>
-    </section>
-  </main>
-
-　<!-- 三食分の提案結果ポップアップ -->
-　<!-- <div id="resultModal" class="modal"> -->
-  　<!-- <div class="modal-content"> -->
-    　<!-- <span id="closeResultModal" class="close">&times;</span> -->
-    　<!-- <h3>三食分の提案結果</h3> -->
-    　<!-- <div id="resultPopupArea"></div> -->
-    　<!-- <button id="closeResultModalBottom" class="close-btn">閉じる</button> -->
-  　<!-- </div> -->
-　<!-- </div> -->
-
-  
-  <!-- 履歴ポップアップ -->
-  <div id="historyPopup" class="popup hidden">
-    <div class="popup-content">
-      <h3>過去3日分の履歴</h3>
-      <div id="historyList"></div>
-      <button id="closeHistory">閉じる</button>
+    <div class="select-block">
+      <label>副菜</label>
+      <select id="sideSelect"></select>
     </div>
   </div>
 
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+  <button id="generateBtn">提案する</button>
+
+  <section class="result">
+    <h2>提案結果</h2>
+    <div id="resultArea">ここに結果が表示されます</div>
+  </section>
+</main>
+
+<!-- NGモーダル -->
+<div id="ngModal" class="modal">
+  <div class="modal-content">
+    <span id="closeNgModal" class="close">&times;</span>
+    <h3>入れたくないもの</h3>
+
+    <div class="ng-category">
+      <h4>主食</h4>
+      <div id="ngStaple"></div>
+    </div>
+
+    <div class="ng-category">
+      <h4>主菜</h4>
+      <div id="ngMain"></div>
+    </div>
+
+    <div class="ng-category">
+      <h4>副菜</h4>
+      <div id="ngSide"></div>
+    </div>
+
+    <button id="closeNgModalBottom" class="close-btn">閉じる</button>
+  </div>
+</div>
+
+<!-- 履歴ポップアップ -->
+<div id="historyPopup" class="popup hidden">
+  <div class="popup-content">
+    <h3>過去3日分の履歴</h3>
+    <div id="historyList"></div>
+    <button id="closeHistory">閉じる</button>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
