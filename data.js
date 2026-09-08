@@ -146,17 +146,3 @@ const combinations = {
   }
 };
 
-// ▼ 朝向けの候補
-const morningStaples = ["パン", "ロールパン", "ヨーグルト", "おにぎり（鮭）"];
-const morningMains   = ["卵焼き", "ウインナー", "ベーコン", "鶏むね肉の塩焼き"];
-const morningSides   = ["サラダ", "ミニトマト", "ヨーグルト", "スープ"];
-
-// ▼ 昼向けの候補
-const noonStaples = ["ご飯", "玄米", "雑穀米", "パン"];
-const noonMains   = ["唐揚げ", "ハンバーグ", "生姜焼き", "鶏の甘辛炒め", "豚肉と玉ねぎの炒め物"];
-const noonSides   = ["ポテトサラダ", "コールスロー", "きんぴらごぼう", "ひじき煮"];
-
-// ▼ 夜向けの候補
-const nightStaples = ["ご飯", "雑炊", "うどん"];
-const nightMains   = ["焼き鮭", "鯖の味噌煮", "豆腐ハンバーグ", "厚揚げの照り焼き", "煮物"];
-const nightSides   = ["卯の花", "切り干し大根", "かぼちゃ煮", "小松菜ナムル"];
