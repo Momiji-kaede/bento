@@ -170,6 +170,28 @@ header {
   color: #000; /* ← ホバー時はさらに濃く */
 }
 
+.hidden {
+  display: none;
+}
+
+.history-header {
+  cursor: pointer;
+  padding: 8px;
+  background: #eee;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+.history-header:hover {
+  background: #ddd;
+}
+
+.history-content {
+  padding: 10px;
+  background: #fafafa;
+  border-left: 3px solid #ccc;
+  margin-bottom: 10px;
+}
 
 
 @media screen and (max-width: 600px) {
