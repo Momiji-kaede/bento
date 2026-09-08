@@ -94,9 +94,21 @@ function fillSelect(id, list) {
   });
 }
 
-fillSelect("stapleSelect", staples);
-fillSelect("mainSelect", mains);
-fillSelect("sideSelect", sides);
+// 朝
+fillSelect("stapleMorning", staples);
+fillSelect("mainMorning", mains);
+fillSelect("sideMorning", sides);
+
+// 昼
+fillSelect("stapleNoon", staples);
+fillSelect("mainNoon", mains);
+fillSelect("sideNoon", sides);
+
+// 夜
+fillSelect("stapleNight", staples);
+fillSelect("mainNight", mains);
+fillSelect("sideNight", sides);
+
 
 // ▼ 提案ボタン（三食＋ポップアップ表示）
 document.getElementById("generateBtn").addEventListener("click", () => {
