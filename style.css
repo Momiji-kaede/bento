@@ -39,7 +39,6 @@ header {
 .selector-area label {
   display: block;
   margin-top: 10px;
-  cursor: pointer;
 }
 
 .selector-area select {
@@ -216,6 +215,7 @@ header {
     border: 2px solid #ffb36b;
     background: #fff;
     box-sizing: border-box;
+    cursor: pointer;
   }
 
   .select-block label {
