@@ -112,9 +112,21 @@ fillSelect("sideNight", sides);
 
 // ▼ 提案ボタン（三食＋ポップアップ表示）
 document.getElementById("generateBtn").addEventListener("click", () => {
-  let staple = document.getElementById("stapleSelect").value;
-  let main   = document.getElementById("mainSelect").value;
-  let side   = document.getElementById("sideSelect").value;
+  // 朝
+  let stapleMorning = document.getElementById("stapleMorning").value;
+  let mainMorning   = document.getElementById("mainMorning").value;
+  let sideMorning   = document.getElementById("sideMorning").value;
+
+  // 昼
+  let stapleNoon = document.getElementById("stapleNoon").value;
+  let mainNoon   = document.getElementById("mainNoon").value;
+  let sideNoon   = document.getElementById("sideNoon").value;
+
+  // 夜
+  let stapleNight = document.getElementById("stapleNight").value;
+  let mainNight   = document.getElementById("mainNight").value;
+  let sideNight   = document.getElementById("sideNight").value;
+
 
   const ngWords = [...document.querySelectorAll(".ng-item input:checked")]
     .map(cb => cb.value);
