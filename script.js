@@ -67,13 +67,20 @@ function generateThreeMeals(staple, main, side, ngWords) {
     let m = main   || randomPick(mains, ngWords);
 
     let sd = "";
-    if (combinations[s] && combinations[s][m]) {
-      sd = randomPick(combinations[s][m], ngWords);
+
+    // 副菜が選択されていたらそのまま使う
+    if (side) {
+      sd = side;
+    } else {
+      if (combinations[s] && combinations[s][m]) {
+        sd = randomPick(combinations[s][m], ngWords);
+      }
+      if (!sd) sd = randomPick(sides, ngWords);
     }
-    if (!sd) sd = randomPick(sides, ngWords);
 
     return { staple: s, main: m, side: sd };
   }
+
 
   return {
     breakfast: makeOneMeal(),
