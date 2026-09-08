@@ -170,10 +170,23 @@ header {
   color: #000; /* ← ホバー時はさらに濃く */
 }
 
-.hidden {
-  display: none;
+/* ▼ 履歴ポップアップの基本デザイン＋スクロール */
+#historyPopup {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  max-height: 80vh;      /* 画面の80%までの高さに制限 */
+  overflow-y: auto;      /* はみ出したら縦スクロール */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 9999;
 }
 
+/* ▼ 折りたたみのヘッダー（クリック部分） */
 .history-header {
   cursor: pointer;
   padding: 8px;
@@ -186,12 +199,19 @@ header {
   background: #ddd;
 }
 
+/* ▼ 折りたたみの中身 */
 .history-content {
   padding: 10px;
   background: #fafafa;
   border-left: 3px solid #ccc;
   margin-bottom: 10px;
 }
+
+/* ▼ 非表示用 */
+.hidden {
+  display: none;
+}
+
 
 
 @media screen and (max-width: 600px) {
