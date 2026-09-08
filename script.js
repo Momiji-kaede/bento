@@ -110,7 +110,6 @@ fillSelect("mainNight", mains);
 fillSelect("sideNight", sides);
 
 
-// ▼ 提案ボタン（三食＋ポップアップ表示）
 document.getElementById("generateBtn").addEventListener("click", () => {
   // 朝
   let stapleMorning = document.getElementById("stapleMorning").value;
@@ -127,58 +126,70 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   let mainNight   = document.getElementById("mainNight").value;
   let sideNight   = document.getElementById("sideNight").value;
 
-
   const ngWords = [...document.querySelectorAll(".ng-item input:checked")]
     .map(cb => cb.value);
 
-  // ▼ 三食分の提案を生成
-  const meals = generateThreeMeals(staple, main, side, ngWords);
+  // ▼ 朝食を生成
+  const breakfast = generateThreeMeals(
+    stapleMorning, mainMorning, sideMorning, ngWords
+  ).breakfast;
+
+  // ▼ 昼食を生成
+  const lunch = generateThreeMeals(
+    stapleNoon, mainNoon, sideNoon, ngWords
+  ).breakfast; // breakfastを使う理由は後で説明するね
+
+  // ▼ 夕食を生成
+  const dinner = generateThreeMeals(
+    stapleNight, mainNight, sideNight, ngWords
+  ).breakfast;
 
   // ▼ ポップアップに表示するHTML
   const html = `
     <h4>朝食</h4>
-    主食：${meals.breakfast.staple}<br>
-    主菜：${meals.breakfast.main}<br>
-    副菜：${meals.breakfast.side}<br><br>
+    主食：${breakfast.staple}<br>
+    主菜：${breakfast.main}<br>
+    副菜：${breakfast.side}<br><br>
 
     <h4>昼食</h4>
-    主食：${meals.lunch.staple}<br>
-    主菜：${meals.lunch.main}<br>
-    副菜：${meals.lunch.side}<br><br>
+    主食：${lunch.staple}<br>
+    主菜：${lunch.main}<br>
+    副菜：${lunch.side}<br><br>
 
     <h4>夕食</h4>
-    主食：${meals.dinner.staple}<br>
-    主菜：${meals.dinner.main}<br>
-    副菜：${meals.dinner.side}<br>
+    主食：${dinner.staple}<br>
+    主菜：${dinner.main}<br>
+    副菜：${dinner.side}<br>
   `;
 
   document.getElementById("resultPopupArea").innerHTML = html;
 
-  // ▼ ポップアップを開く
   document.getElementById("resultModal").style.display = "block";
 
-  // ▼ 履歴は朝食だけ保存（必要なら三食保存にも変更可能）
-  saveHistory(meals.breakfast.staple, meals.breakfast.main, meals.breakfast.side);
+  // 履歴は朝だけ保存（必要なら三食保存に変更可能）
+  saveHistory(breakfast, lunch, dinner);
 });
 
 
-// ▼ 履歴保存（3日分）
-function saveHistory(staple, main, side) {
+
+// ▼ 履歴保存（三食分）
+function saveHistory(breakfast, lunch, dinner) {
   const today = new Date().toLocaleDateString("ja-JP");
 
   let history = JSON.parse(localStorage.getItem("bentoHistory")) || [];
 
   history.unshift({
     date: today,
-    staple,
-    main,
-    side
+    breakfast,
+    lunch,
+    dinner
   });
 
-  history = history.slice(0, 3);
+  history = history.slice(0, 3); // 3日分だけ保存
 
   localStorage.setItem("bentoHistory", JSON.stringify(history));
 }
+
 
 // ▼ 履歴表示
 document.getElementById("historyBtn").addEventListener("click", () => {
@@ -190,9 +201,21 @@ document.getElementById("historyBtn").addEventListener("click", () => {
       h => `
       <div>
         <strong>${h.date}</strong><br>
-        主食：${h.staple}<br>
-        主菜：${h.main}<br>
-        副菜：${h.side}<br><br>
+
+        <h4>朝食</h4>
+        主食：${h.breakfast.staple}<br>
+        主菜：${h.breakfast.main}<br>
+        副菜：${h.breakfast.side}<br><br>
+
+        <h4>昼食</h4>
+        主食：${h.lunch.staple}<br>
+        主菜：${h.lunch.main}<br>
+        副菜：${h.lunch.side}<br><br>
+
+        <h4>夕食</h4>
+        主食：${h.dinner.staple}<br>
+        主菜：${h.dinner.main}<br>
+        副菜：${h.dinner.side}<br><br>
       </div>
     `
     )
@@ -200,6 +223,7 @@ document.getElementById("historyBtn").addEventListener("click", () => {
 
   document.getElementById("historyPopup").classList.remove("hidden");
 });
+
 
 // ▼ 履歴閉じる
 document.getElementById("closeHistory").addEventListener("click", () => {
