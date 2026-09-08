@@ -212,6 +212,25 @@ header {
   display: none;
 }
 
+/* ▼ プルダウン全体の見やすさ改善 */
+select {
+  font-size: 18px;       /* 文字を大きく */
+  padding: 8px;          /* 内側の余白を増やす */
+  line-height: 1.6;      /* 行間を広げる */
+  max-height: 200px;     /* 表示領域を広げる */
+  overflow-y: auto;      /* スクロール可能にする */
+  border-radius: 6px;    /* 角を丸くする */
+  border: 1px solid #ccc;
+}
+
+/* ▼ 選択肢の視認性アップ（ストライプ） */
+select option:nth-child(odd) {
+  background: #f7f7f7;
+}
+
+select option:nth-child(even) {
+  background: #ffffff;
+}
 
 
 @media screen and (max-width: 600px) {
