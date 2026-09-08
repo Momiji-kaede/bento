@@ -22,8 +22,7 @@ function renderNgList() {
 
 renderNgList();
 
-
-// ▼ モーダル開閉
+// ▼ NGモーダル開閉
 const modal = document.getElementById("ngModal");
 document.getElementById("openNgModal").onclick = () => modal.style.display = "block";
 document.getElementById("closeNgModal").onclick = () => modal.style.display = "none";
@@ -33,69 +32,14 @@ window.onclick = (e) => {
   if (e.target === modal) modal.style.display = "none";
 };
 
-// // ★★★ ここに結果モーダルの処理を追加する ★★★
-
-// const resultModal = document.getElementById("resultModal");
-
-// document.getElementById("closeResultModal").onclick = () => {
-//   resultModal.style.display = "none";
-// };
-
-// document.getElementById("closeResultModalBottom").onclick = () => {
-//   resultModal.style.display = "none";
-// };
-
-// // window.onclick = (e) => {
-// //   if (e.target === resultModal) resultModal.style.display = "none";
-// // };
-
-// window.onclick = (e) => {
-//   if (e.target === modal) modal.style.display = "none";
-//   if (e.target === resultModal) resultModal.style.display = "none";
-// };
-
-
-// // ★★★ ここまで追加 ★★★
-
-
+// ▼ ランダムピック（NGを除外）
 function randomPick(list, ngWords) {
   const candidates = list.filter(
     item => item && !ngWords.includes(item)
   );
-  if (candidates.length === 0) return ""; // 全部NGだった場合
+  if (candidates.length === 0) return "";
   return candidates[Math.floor(Math.random() * candidates.length)];
 }
-// function randomPick(list, ngWords) {
-//   const filtered = list.filter(item => item && !ngWords.includes(item));
-//   if (filtered.length === 0) return "";
-//   return filtered[Math.floor(Math.random() * filtered.length)];
-// }
-
-
-// // ▼ 三食分の提案ロジック
-// function generateThreeMeals(staple, main, side, ngWords) {
-
-//   function makeOneMeal() {
-//     let s = staple || randomPick(staples, ngWords);
-//     let m = main || randomPick(mains, ngWords);
-
-//     // 相性があれば優先
-//     let sd = "";
-//     if (combinations[s] && combinations[s][m]) {
-//       sd = randomPick(combinations[s][m], ngWords);
-//     }
-//     if (!sd) sd = randomPick(sides, ngWords);
-
-//     return { staple: s, main: m, side: sd };
-//   }
-
-//   return {
-//     breakfast: makeOneMeal(),
-//     lunch: makeOneMeal(),
-//     dinner: makeOneMeal()
-//   };
-// }
-
 
 // ▼ プルダウンにデータを入れる
 function fillSelect(id, list) {
@@ -112,55 +56,16 @@ fillSelect("stapleSelect", staples);
 fillSelect("mainSelect", mains);
 fillSelect("sideSelect", sides);
 
-// ▼ 提案ボタン
+// ▼ 提案ボタン（1食分）
 document.getElementById("generateBtn").addEventListener("click", () => {
   let staple = document.getElementById("stapleSelect").value;
   let main   = document.getElementById("mainSelect").value;
   let side   = document.getElementById("sideSelect").value;
 
-  // const ngWords = document.getElementById("ngInput").value
-  //   .split(",")
-  //   .map(w => w.trim())
-  //   .filter(w => w);
-
-  // const ngWords = [...document.querySelectorAll("#ngList input:checked")]
-  // .map(cb => cb.value);
-
   const ngWords = [...document.querySelectorAll(".ng-item input:checked")]
-  .map(cb => cb.value);
+    .map(cb => cb.value);
 
-// // ▼ 三食分の提案を生成
-//   const meals = generateThreeMeals(staple, main, side, ngWords);
-
-//   // ▼ ポップアップに表示するHTML
-//   const html = `
-//     <h4>朝食</h4>
-//     主食：${meals.breakfast.staple}<br>
-//     主菜：${meals.breakfast.main}<br>
-//     副菜：${meals.breakfast.side}<br><br>
-
-//     <h4>昼食</h4>
-//     主食：${meals.lunch.staple}<br>
-//     主菜：${meals.lunch.main}<br>
-//     副菜：${meals.lunch.side}<br><br>
-
-//     <h4>夕食</h4>
-//     主食：${meals.dinner.staple}<br>
-//     主菜：${meals.dinner.main}<br>
-//     副菜：${meals.dinner.side}<br>
-//   `;
-
-//   // document.getElementById("resultPopupArea").innerHTML = html;
-
-//   // ▼ ポップアップを開く
-//   // document.getElementById("resultModal").style.display = "block";
-//   resultModal.style.display = "block";
-
-//   // ▼ 履歴保存（朝昼夜まとめて保存）
-//   saveHistory(meals.breakfast.staple, meals.breakfast.main, meals.breakfast.side);
-// });
-  
-  // ▼ NGチェック
+  // NGチェック
   if ([staple, main, side].some(v => ngWords.includes(v))) {
     document.getElementById("resultArea").innerHTML =
       "入れたくないものが含まれています。選び直してください。";
@@ -182,18 +87,12 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     if (!side) side = randomPick(sides, ngWords);
   }
 
-  // ▼ 副菜だけ選んだ → 主菜 → 主食 の順で補完
-  if (side && !staple && !main) {
-    main   = randomPick(mains, ngWords);
-    staple = randomPick(staples, ngWords);
-  }
-
   // ▼ 主食補完
   if (!staple) {
     staple = randomPick(staples, ngWords);
   }
 
-  // ▼ 主菜補完（相性優先）
+  // ▼ 主菜補完
   if (!main) {
     if (combinations[staple]) {
       main = randomPick(Object.keys(combinations[staple]), ngWords);
@@ -201,7 +100,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     if (!main) main = randomPick(mains, ngWords);
   }
 
-  // ▼ 副菜補完（相性優先）
+  // ▼ 副菜補完
   if (!side) {
     if (combinations[staple] && combinations[staple][main]) {
       side = randomPick(combinations[staple][main], ngWords);
@@ -209,14 +108,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     if (!side) side = randomPick(sides, ngWords);
   }
 
-  // ▼ 最終NGチェック
-  if ([staple, main, side].some(v => ngWords.includes(v))) {
-    document.getElementById("resultArea").innerHTML =
-      "入れたくないものが含まれています。別の組み合わせを試してください。";
-    return;
-  }
-
-  // ▼ 結果表示（理由なし）
+  // ▼ 結果表示
   document.getElementById("resultArea").innerHTML = `
     主食：${staple}<br>
     主菜：${main}<br>
@@ -225,9 +117,6 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
   saveHistory(staple, main, side);
 });
-
-
-
 
 // ▼ 履歴保存（3日分）
 function saveHistory(staple, main, side) {
